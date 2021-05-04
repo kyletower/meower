@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const monk = require("monk");
+const { response } = require("express").response; // fixed?
 
 const app = express();
 
@@ -20,9 +21,17 @@ const mews = db.get("mews"); // this is now a collection, if db doesn't exist, t
 
 app.use(cors()); // adds cors as a middleware, all incoming requests passes through cors which adds the necessary headers to it.
 app.use(express.json()); // json body parser, any incoming req with json content type will be parsed by this middleware and put on the body.
+
 app.get("/", (reqest, response) => {
   response.json({
     message: "Meower! 🐈",
+  });
+});
+
+app.get("/mews", (request, result) => {
+  // query db
+  mews.find().then((mews) => {
+    response.json(mews);
   });
 });
 

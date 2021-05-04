@@ -5,6 +5,10 @@ const loadingElement = document.querySelector(".loading");
 loadingElement.style.display = "none";
 const API_URL = "http://localhost:5000/mews";
 
+loadingElement.style.display = "";
+
+listAllMews();
+
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   const formData = new FormData(form);
@@ -36,3 +40,11 @@ form.addEventListener("submit", (event) => {
       loadingElement.style.display = "none";
     });
 });
+
+function listAllMews() {
+  fetch(API_URL)
+    .then((response) => response.json())
+    .then((mews) => {
+      console.log(mews);
+    });
+}
