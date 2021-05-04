@@ -3,6 +3,7 @@ const cors = require("cors");
 const monk = require("monk");
 // const { response } = require("express");
 const Filter = require("bad-words");
+const rateLimit = require("express-rate-limit");
 
 const app = express();
 
@@ -46,6 +47,14 @@ function isValidMew(mew) {
     mew.content.toString().trim() !== ""
   );
 }
+
+// this will only limit posting mews since it's below this line!
+app.use(
+  rateLimit({
+    windowMs: 30 * 1000, // 30 secs
+    max: 1, // limit each IP to 100 requests per windowmS
+  })
+);
 
 app.post("/mews", (request, response) => {
   //   console.log(request.body);
