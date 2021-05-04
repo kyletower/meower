@@ -43,6 +43,7 @@ app.post("/mews", (request, response) => {
     const mew = {
       name: request.body.name.toString(),
       content: request.body.content.toString(),
+      created: new Date(),
     };
     // console.log(mew);
     mews.insert(mew).then((createdMew) => {
