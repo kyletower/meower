@@ -20,6 +20,7 @@ form.addEventListener("submit", (event) => {
   form.style.display = "none";
   loadingElement.style.display = "";
 
+  // fetch allows us to make requests to a server
   fetch(API_URL, {
     method: "POST",
     body: JSON.stringify(mew),
@@ -30,5 +31,8 @@ form.addEventListener("submit", (event) => {
     .then((response) => response.json())
     .then((createdMew) => {
       console.log(createdMew);
+      form.reset();
+      form.style.display = "";
+      loadingElement.style.display = "none";
     });
 });
