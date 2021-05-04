@@ -11,8 +11,32 @@ app.get("/", (reqest, response) => {
   });
 });
 
+function isValidMew(mew) {
+  return (
+    mew.name &&
+    mew.name.toString().trim() !== "" &&
+    mew.content &&
+    mew.content.toString().trim() !== ""
+  );
+}
+
 app.post("/mews", (request, response) => {
-  console.log(request.body);
+  //   console.log(request.body);
+  // validate
+  if (isValidMew(request.body)) {
+    // insert into db
+    const mew = {
+      name: request.body.name.toString(),
+      content: request.body.content.toString(),
+    };
+    console.log(mew);
+  } else {
+    // error
+    response.status(422);
+    response.json({
+      message: "Hey! Name and Content are required!",
+    });
+  }
 });
 
 app.listen(5000, () => {
