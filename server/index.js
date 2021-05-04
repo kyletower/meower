@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const monk = require("monk");
-const { response } = require("express").response; // fixed?
+const { response } = require("express");
 
 const app = express();
 
@@ -28,7 +28,7 @@ app.get("/", (reqest, response) => {
   });
 });
 
-app.get("/mews", (request, result) => {
+app.get("/mews", (request, response) => {
   // query db
   mews.find().then((mews) => {
     response.json(mews);
