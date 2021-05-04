@@ -7,7 +7,7 @@ const rateLimit = require("express-rate-limit");
 
 const app = express();
 
-const db = monk("localhost/meower"); // meower is the db name. Mongo works with collections (think arrays)
+const db = monk(process.env.MONGO_URI || "localhost/meower"); // meower is the db name. Mongo works with collections (think arrays)
 /** 
    [{
     name: ...,
