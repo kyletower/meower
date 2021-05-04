@@ -1,7 +1,22 @@
 const express = require("express");
 const cors = require("cors");
+const monk = require("monk");
 
 const app = express();
+
+const db = monk("localhost/meower"); // meower is the db name. Mongo works with collections (think arrays)
+/** 
+   [{
+    name: ...,
+    content: ...,
+    _id: ...
+}, {
+    name: ...,
+    content: ...,
+    _id: ...
+}]
+**/
+const mews = db.get("mews"); // this is now a collection, if db doesn't exist, this will create it, if the collection doesn't exist, this will create it
 
 app.use(cors()); // adds cors as a middleware, all incoming requests passes through cors which adds the necessary headers to it.
 app.use(express.json()); // json body parser, any incoming req with json content type will be parsed by this middleware and put on the body.
@@ -29,7 +44,10 @@ app.post("/mews", (request, response) => {
       name: request.body.name.toString(),
       content: request.body.content.toString(),
     };
-    console.log(mew);
+    // console.log(mew);
+    mews.insert(mew).then((createdMew) => {
+      response.json(createdMew);
+    }); // .insert, .update, .find, etc
   } else {
     // error
     response.status(422);
