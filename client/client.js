@@ -1,4 +1,4 @@
-console.log("Hello, world!");
+// console.log("Hello, world!");
 
 const form = document.querySelector("form"); // whenever you see document, it's client/user side
 const loadingElement = document.querySelector(".loading");
@@ -34,14 +34,18 @@ form.addEventListener("submit", (event) => {
   })
     .then((response) => response.json())
     .then((createdMew) => {
-      console.log(createdMew);
+      // console.log(createdMew);
       form.reset();
-      form.style.display = "";
+      setTimeout(() => {
+        form.style.display = "";
+      }, 30000);
+      listAllMews();
       loadingElement.style.display = "none";
     });
 });
 
 function listAllMews() {
+  mewsElement.innerHTML = "";
   fetch(API_URL)
     .then((response) => response.json())
     .then((mews) => {
